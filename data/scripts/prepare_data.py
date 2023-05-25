@@ -12,9 +12,9 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("input_file_path")
     parser.add_argument("output_file_dir")
-    parser.add_argument("-mur", "--min_user_reviews", default=6)
-    parser.add_argument("-mrr", "--min_restaurant_reviews", default=6)
-    parser.add_argument("-ts", "--test_samples", default=1)
+    parser.add_argument("-mur", "--min_user_reviews", default=6, type=int)
+    parser.add_argument("-mrr", "--min_restaurant_reviews", default=6, type=int)
+    parser.add_argument("-ts", "--test_samples", default=1, type=int)
 
     return parser.parse_args()
 
