@@ -19,10 +19,10 @@ class DeepFM(nn.Module):
     def __init__(
         self,
         feature_sizes,
-        embedding_size=4,
+        embedding_size=10,
         hidden_dims=[32, 32],
         num_classes=1,
-        dropout=[0.5, 0.5],
+        dropout=[50, 50],
         use_cuda=True,
         verbose=False,
     ):
@@ -86,6 +86,7 @@ class DeepFM(nn.Module):
             # nn.init.kaiming_normal_(self.fc1.weight)
             setattr(self, "batchNorm_" + str(i), nn.BatchNorm1d(all_dims[i]))
             setattr(self, "dropout_" + str(i), nn.Dropout(dropout[i - 1]))
+        self.linear_last = nn.Linear(1, 1)
 
     def forward(self, Xi, Xv):
         """
@@ -139,7 +140,8 @@ class DeepFM(nn.Module):
             + torch.sum(deep_out, 1)
             + self.bias
         )
-        return total_sum
+        out = self.linear_last(total_sum.unsqueeze(-1))
+        return out
 
     def fit(
         self,
@@ -179,7 +181,7 @@ class DeepFM(nn.Module):
                 optimizer.step()
 
                 if verbose and t % print_every == 0:
-                    model.eval()  # set model to evaluation mode
+                    model.eval()  # set model to evaluation modes
                     tot_loss = 0
                     with torch.no_grad():
                         for xi, xv, y in val_loader:
@@ -197,3 +199,4 @@ class DeepFM(nn.Module):
                     )
                     print()
                     model.train()
+
