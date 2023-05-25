@@ -22,7 +22,7 @@ class DeepFM(nn.Module):
         embedding_size=10,
         hidden_dims=[32, 32],
         num_classes=1,
-        dropout=[50, 50],
+        dropout=[0.5, 0.5],
         use_cuda=True,
         verbose=False,
     ):
@@ -199,4 +199,3 @@ class DeepFM(nn.Module):
                     )
                     print()
                     model.train()
-
