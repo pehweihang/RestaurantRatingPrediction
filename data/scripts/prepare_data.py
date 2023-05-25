@@ -1,5 +1,6 @@
 import argparse
 import os
+from sklearn.preprocessing import LabelEncoder
 
 import pandas as pd
 
@@ -45,6 +46,15 @@ def main(
             )
         ]
     df.to_csv(os.path.join(output_file_dir, "full.csv"), index=False)
+
+    # Convert string ids to numbers
+    user_id_encoder = LabelEncoder()
+    user_id_encoder.fit(df[USER_ID])
+    df[USER_ID] = user_id_encoder.transform(df[USER_ID])
+    restaurant_id_encoder = LabelEncoder()
+    restaurant_id_encoder.fit(df[RESTAURANT_ID])
+    df[RESTAURANT_ID] = restaurant_id_encoder.transform(df[RESTAURANT_ID])
+
     test = (
         df.groupby(USER_ID)
         .apply(pd.DataFrame.sample, n=1)
