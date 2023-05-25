@@ -1,11 +1,12 @@
 import argparse
 import os
-from sklearn.preprocessing import LabelEncoder
 
 import pandas as pd
+from sklearn.preprocessing import LabelEncoder, MinMaxScaler
 
 USER_ID = "user_id"
 RESTAURANT_ID = "restaurant_id"
+RATING = "rating"
 
 
 def parse_args() -> argparse.Namespace:
@@ -13,7 +14,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("input_file_path")
     parser.add_argument("output_file_dir")
     parser.add_argument("-mur", "--min_user_reviews", default=6, type=int)
-    parser.add_argument("-mrr", "--min_restaurant_reviews", default=6, type=int)
+    parser.add_argument(
+        "-mrr", "--min_restaurant_reviews", default=6, type=int
+    )
     parser.add_argument("-ts", "--test_samples", default=1, type=int)
 
     return parser.parse_args()
@@ -46,6 +49,11 @@ def main(
             )
         ]
     df.to_csv(os.path.join(output_file_dir, "full.csv"), index=False)
+    min_max_scaler = MinMaxScaler()
+    min_max_scaler.fit(df[RATING].to_numpy().reshape([-1, 1]))
+    df[RATING] = min_max_scaler.transform(
+        df[RATING].to_numpy().reshape([-1, 1])
+    )
 
     # Convert string ids to numbers
     user_id_encoder = LabelEncoder()
@@ -61,8 +69,8 @@ def main(
         .reset_index(level=0, drop=True)
     )
     train = df[~df.index.isin(test.index)]
-    train.to_csv(os.path.join(output_file_dir, 'train.csv'), index=False)
-    test.to_csv(os.path.join(output_file_dir, 'test.csv'), index=False)
+    train.to_csv(os.path.join(output_file_dir, "train.csv"), index=False)
+    test.to_csv(os.path.join(output_file_dir, "test.csv"), index=False)
 
 
 if __name__ == "__main__":
