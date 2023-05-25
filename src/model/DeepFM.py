@@ -192,7 +192,7 @@ class DeepFM(nn.Module):
                             total = model(xi, xv)
                             tot_loss += torch.sqrt(criterion(total, y)).item()
                     print(
-                        "Iteration {}, train loss = {.4f} test loss = {:.4f}".format(
+                        "Iteration {}, train loss = {:.4f} test loss = {:.4f}".format(
                             t, loss.item(), tot_loss / len(val_loader)
                         )
                     )
