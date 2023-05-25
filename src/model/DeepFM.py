@@ -141,7 +141,7 @@ class DeepFM(nn.Module):
             + self.bias
         )
         out = self.linear_last(total_sum.unsqueeze(-1))
-        return out
+        return out.unsqueeze(-1)
 
     def fit(
         self,
