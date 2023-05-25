@@ -151,8 +151,6 @@ class DeepFM(nn.Module):
         print_every=100,
     ):
         """
-        Training a model and valid accuracy.
-
         Inputs:
         - loader_train: I
         - loader_val: .
@@ -167,7 +165,8 @@ class DeepFM(nn.Module):
         model = self.train().to(device=self.device)
         criterion = nn.MSELoss()
 
-        for _ in range(epochs):
+        for epoch in range(epochs):
+            print(f"epoch {epoch}")
             for t, (xi, xv, y) in enumerate(train_loader):
                 xi = xi.to(device=self.device, dtype=self.dtype)
                 xv = xv.to(device=self.device, dtype=torch.float)
@@ -197,3 +196,4 @@ class DeepFM(nn.Module):
                         )
                     )
                     print()
+                    model.train()
