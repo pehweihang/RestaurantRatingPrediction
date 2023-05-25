@@ -11,10 +11,10 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("train_path")
     parser.add_argument("test_path")
-    parser.add_argument("-lr", "--learning_rate", default=1e-4)
-    parser.add_argument("-e", "--epochs", default=100)
-    parser.add_argument("-bs", "--batch_size", default=8)
-    parser.add_argument("-g", "--gpu", default=True)
+    parser.add_argument("-lr", "--learning_rate", default=1e-4, type=float)
+    parser.add_argument("-e", "--epochs", default=100, type=int)
+    parser.add_argument("-bs", "--batch_size", default=8, type=int)
+    parser.add_argument("-g", "--gpu", default=True, type=bool)
     return parser.parse_args()
 
 
