@@ -1,0 +1,29 @@
+{
+    "dataset_id": "restaurant_data",
+    "num_fields": 2,
+    "total_features": 6217,
+    "input_length": 2,
+    "labels": [
+        "rating"
+    ],
+    "features": [
+        {
+            "user_id": {
+                "source": "",
+                "type": "categorical",
+                "padding_idx": 0,
+                "oov_idx": 3542,
+                "vocab_size": 3543
+            }
+        },
+        {
+            "restaurant_id": {
+                "source": "",
+                "type": "categorical",
+                "padding_idx": 0,
+                "oov_idx": 2673,
+                "vocab_size": 2674
+            }
+        }
+    ]
+}

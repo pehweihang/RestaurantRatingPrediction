@@ -6,6 +6,7 @@ from torch.utils.data import Dataset
 
 class RestaurantDataset(Dataset):
     def __init__(self, data_path, train=True):
+        print(data_path)
         df = pd.read_csv(data_path)
         self.data = df.iloc[:, :-1].values
         self.target = df.iloc[:, -1].values

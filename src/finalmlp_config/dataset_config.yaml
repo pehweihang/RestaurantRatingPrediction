@@ -1,0 +1,11 @@
+restaurant_data:
+    data_format: csv
+    data_root: ../data/
+    feature_cols:
+    -   active: true
+        dtype: float
+        name: [user_id, restaurant_id]
+        type: categorical
+    label_col: {dtype: float, name: rating}
+    train_data: ../data/train.csv
+    valid_data: ../data/test.csv
